@@ -16,6 +16,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final XboxController operator = new XboxController(1);
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -26,8 +27,13 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
+    private final int shooterAxis = XboxController.Axis.kRightTrigger.value;
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Shooter s_Shooter = new Shooter();
+    private final Intake s_Intake = new Intake();
+
     private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -39,6 +45,22 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
+            )
+        );
+
+        s_Shooter.setDefaultCommand(
+            new ShooterCommad(
+                s_Shooter, 
+                () -> driver.getRawAxis(shooterAxis)
+            )
+        );
+
+        s_Intake.setDefaultCommand(
+            new IntakeCommand(
+                s_Intake, 
+                () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value), 
+                () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value),
+                () -> operator.getRawAxis(XboxController.Axis.kLeftY.value)
             )
         );
         
