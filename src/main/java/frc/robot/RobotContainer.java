@@ -27,12 +27,13 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
-    private final int shooterAxis = XboxController.Axis.kRightTrigger.value;
-
+    private final JoystickButton intakeGroundButton = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton shootButton = new JoystickButton(operator,XboxController.Button.kRightBumper.value);
+    
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-    private final Shooter s_Shooter = new Shooter();
     private final Intake s_Intake = new Intake();
+    private final Shooter s_Shooter = new Shooter();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -48,22 +49,7 @@ public class RobotContainer {
             )
         );
 
-        s_Shooter.setDefaultCommand(
-            new ShooterCommad(
-                s_Shooter, 
-                () -> driver.getRawAxis(shooterAxis)
-            )
-        );
 
-        s_Intake.setDefaultCommand(
-            new IntakeCommand(
-                s_Intake, 
-                () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value), 
-                () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value),
-                () -> operator.getRawAxis(XboxController.Axis.kLeftY.value)
-            )
-        );
-        
         configureButtonBindings();
 
         // in the auto shooter we can set a defult auto in 
@@ -74,6 +60,14 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        
+        intakeGroundButton
+            .whileTrue(new IntakeDownCommand(s_Intake))
+            .onFalse(new IntakeUpCommand(s_Intake));
+
+        shootButton
+            .whileTrue(new StartShootCommand(s_Shooter, s_Intake))
+            .onFalse(new StopShootCommand(s_Shooter, s_Intake));
     }
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();

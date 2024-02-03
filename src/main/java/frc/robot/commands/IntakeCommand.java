@@ -7,14 +7,14 @@ import java.util.function.DoubleSupplier;
 
 public class IntakeCommand extends Command{
     
-    private Intake Intake;
+    private Intake intake;
     private DoubleSupplier upSpeed;
     private DoubleSupplier downSpeed;
 
     private DoubleSupplier suckerSpeed;
 
     public IntakeCommand(Intake Intake, DoubleSupplier up, DoubleSupplier down, DoubleSupplier suckerSpeed) {
-        this.Intake = Intake;
+        this.intake = Intake;
         addRequirements(Intake);
 
         this.upSpeed = up;
@@ -25,7 +25,7 @@ public class IntakeCommand extends Command{
     
     @Override
     public void execute() {
-        Intake.manualControlAngle(upSpeed.getAsDouble() - downSpeed.getAsDouble());
-        Intake.manualControlSpeed(suckerSpeed.getAsDouble());
+        intake.manualControlAngle(upSpeed.getAsDouble() - downSpeed.getAsDouble());
+        intake.manualControlSpeed(suckerSpeed.getAsDouble());
     }
 }
