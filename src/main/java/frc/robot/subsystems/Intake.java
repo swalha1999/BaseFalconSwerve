@@ -28,12 +28,12 @@ public class Intake extends SubsystemBase {
         angleEncoder.setPosition(0);
 
         
-        anglePidController.setP(0.01);
+        anglePidController.setP(0.04);
         anglePidController.setI(0);
         anglePidController.setD(0);
         anglePidController.setIZone(0);
         anglePidController.setFF(0);
-        anglePidController.setOutputRange(-0.2, 0.2);
+        anglePidController.setOutputRange(-0.4, 0.4);
 
         pose = 0;
 
@@ -41,11 +41,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void manualControlAngle(double current) {
-        if (abs(current) > 0.2){
-            anglePidController.setReference(current,ControlType.kDutyCycle);
-            angleMotor.set(current);
-            pose = angleEncoder.getPosition();
-        }
+        this.pose = this.pose + current;
     }
 
     public void setPose(double pose){
@@ -64,15 +60,14 @@ public class Intake extends SubsystemBase {
         sucker.set(speed);
     }
     
-    private double abs(double num){
-        return num > 0 ? num : -num;
-    }
+    // private double abs(double num){
+    //     return num > 0 ? num : -num;
+    // }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake angle", angleEncoder.getPosition());
         anglePidController.setReference(pose, ControlType.kPosition);
-        
     }
 
     

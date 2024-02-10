@@ -14,9 +14,8 @@ public class IntakeCommand extends Command{
     private DoubleSupplier suckerSpeed;
 
     public IntakeCommand(Intake Intake, DoubleSupplier up, DoubleSupplier down, DoubleSupplier suckerSpeed) {
-        this.intake = Intake;
         addRequirements(Intake);
-
+        this.intake = Intake;
         this.upSpeed = up;
         this.downSpeed = down;
         this.suckerSpeed = suckerSpeed;
@@ -25,7 +24,13 @@ public class IntakeCommand extends Command{
     
     @Override
     public void execute() {
-        intake.manualControlAngle(upSpeed.getAsDouble() - downSpeed.getAsDouble());
-        intake.manualControlSpeed(suckerSpeed.getAsDouble());
+        
+        if(upSpeed.getAsDouble() > 0.1 || downSpeed.getAsDouble() > 0.1){
+            intake.manualControlAngle(upSpeed.getAsDouble() - downSpeed.getAsDouble());
+        }
+
+        if(suckerSpeed.getAsDouble() > 0.05 || suckerSpeed.getAsDouble() < -0.05 ){
+            intake.manualControlSpeed(suckerSpeed.getAsDouble() );
+        }
     }
 }

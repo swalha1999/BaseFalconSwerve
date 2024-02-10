@@ -7,6 +7,7 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeDownCommand extends SequentialCommandGroup {
     public IntakeDownCommand(Intake intake) {
+        addRequirements(intake);
         addCommands(
             new InstantCommand(() -> intake.setPose(0)),
             new WaitUntilCommand(() -> intake.getCurrentAngle() < 3),

@@ -28,7 +28,9 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     private final JoystickButton intakeGroundButton = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton middleShootButton = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton shootButton = new JoystickButton(operator,XboxController.Button.kRightBumper.value);
+
     
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -39,6 +41,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -49,6 +52,13 @@ public class RobotContainer {
             )
         );
 
+        s_Intake.setDefaultCommand(
+            new IntakeCommand(
+            s_Intake,
+            () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value),
+            () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value),
+            () -> operator.getRawAxis(XboxController.Axis.kLeftX.value)
+        ));
 
         configureButtonBindings();
 
@@ -62,13 +72,21 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
         
         intakeGroundButton
-            .whileTrue(new IntakeDownCommand(s_Intake))
+            .onTrue(new IntakeDownCommand(s_Intake))
             .onFalse(new IntakeUpCommand(s_Intake));
-
+            
         shootButton
-            .whileTrue(new StartShootCommand(s_Shooter, s_Intake))
+            .onTrue(new StartShootCommand(s_Shooter, s_Intake))
             .onFalse(new StopShootCommand(s_Shooter, s_Intake));
+        
+        middleShootButton
+            .onTrue(new StartShootSlowCommand(s_Shooter, s_Intake))
+            .onFalse(new StopShootCommand(s_Shooter, s_Intake));
+
+
+
     }
+    
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }

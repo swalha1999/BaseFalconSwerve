@@ -12,7 +12,7 @@ public class StopShootCommand extends SequentialCommandGroup {
         addCommands(
             new InstantCommand(() -> shooter.setSpeed(0)),
             new InstantCommand(() -> intake.manualControlSpeed(0))
-        );        
+        ); 
     }
 
     
