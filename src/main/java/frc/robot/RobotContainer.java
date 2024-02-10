@@ -30,8 +30,9 @@ public class RobotContainer {
     private final JoystickButton intakeGroundButton = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton middleShootButton = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton shootButton = new JoystickButton(operator,XboxController.Button.kRightBumper.value);
+    private final JoystickButton intakeInButton = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton intakeOutButton = new JoystickButton(operator, XboxController.Button.kX.value);
 
-    
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Intake s_Intake = new Intake();
@@ -57,7 +58,8 @@ public class RobotContainer {
             s_Intake,
             () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value),
             () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value),
-            () -> operator.getRawAxis(XboxController.Axis.kLeftX.value)
+            () -> intakeInButton.getAsBoolean(),
+            () -> intakeOutButton.getAsBoolean()
         ));
 
         configureButtonBindings();
