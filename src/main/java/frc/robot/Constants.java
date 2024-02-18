@@ -6,13 +6,21 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Pose2d;
+
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
+    
+    public static final Pose2d fieldMiddle = new Pose2d(8.25, 4.10, Rotation2d.fromDegrees(0));
+    public static final Pose2d blueGoal = new Pose2d(0, 5.5, Rotation2d.fromDegrees(0));
+    public static final Pose2d redGoal = new Pose2d(16.5, 5.5, Rotation2d.fromDegrees(0));
 
     public static final class Swerve {
         public static final int pigeonID = 5;

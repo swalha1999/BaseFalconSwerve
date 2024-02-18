@@ -26,17 +26,19 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton climerUp = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton climerDown = new JoystickButton(driver, XboxController.Button.kB.value);
 
-    private final JoystickButton intakeGroundButton = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton middleShootButton = new JoystickButton(operator, XboxController.Button.kY.value);
-    private final JoystickButton shootButton = new JoystickButton(operator,XboxController.Button.kRightBumper.value);
-    private final JoystickButton intakeInButton = new JoystickButton(operator, XboxController.Button.kB.value);
-    private final JoystickButton intakeOutButton = new JoystickButton(operator, XboxController.Button.kX.value);
+    /*Operator Buttons*/
+    private final JoystickButton intakeDown = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton shoot = new JoystickButton(operator, XboxController.Button.kY.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
-    private final Intake s_Intake = new Intake();
-    private final Shooter s_Shooter = new Shooter();
+    public final Swerve s_Swerve = new Swerve();
+    public final Arm s_Arm = new Arm();
+    public final Intake s_Inatke = new Intake();
+    public final Shooter s_Shooter = new Shooter();
+    public final Climer s_Climer = new Climer();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -52,15 +54,22 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        
+        s_Arm.setDefaultCommand(
+            new ArmCommand(
+                s_Arm,
+                () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value),
+                () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value)
+            )
+        );
 
-        s_Intake.setDefaultCommand(
-            new IntakeCommand(
-            s_Intake,
-            () -> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value),
-            () -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value),
-            () -> intakeInButton.getAsBoolean(),
-            () -> intakeOutButton.getAsBoolean()
-        ));
+        s_Climer.setDefaultCommand(
+            new ClimbCommand(
+                s_Climer,
+                () -> climerUp.getAsBoolean(),
+                () -> climerDown.getAsBoolean()
+            )
+        );
 
         configureButtonBindings();
 
@@ -73,23 +82,17 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
         
-        intakeGroundButton
-            .onTrue(new IntakeDownCommand(s_Intake))
-            .onFalse(new IntakeUpCommand(s_Intake));
-            
-        shootButton
-            .onTrue(new StartShootCommand(s_Shooter, s_Intake))
-            .onFalse(new StopShootCommand(s_Shooter, s_Intake));
+        intakeDown
+            .onTrue(new IntakeDown(s_Inatke, s_Arm))
+            .onFalse(new IntakeUp(s_Inatke, s_Arm));
         
-        middleShootButton
-            .onTrue(new StartShootSlowCommand(s_Shooter, s_Intake))
-            .onFalse(new StopShootCommand(s_Shooter, s_Intake));
-
-
+        shoot
+            .onTrue(new Shoot(s_Inatke, s_Shooter, s_Arm))
+            .onFalse(new StopShoot(s_Inatke, s_Shooter));
 
     }
     
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }
-}
+}    

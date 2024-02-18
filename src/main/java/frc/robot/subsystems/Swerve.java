@@ -20,8 +20,8 @@ import edu.wpi.first.networktables.DoubleArraySubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -35,6 +35,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDrivePoseEstimator swervePoseEstimator;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    
     DoubleArraySubscriber botPose;
     public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     public NetworkTableEntry botpose[] = new NetworkTableEntry[6];
@@ -100,6 +101,21 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], false);
         }
+    }
+
+    public boolean isAllianceColorRed(){
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+    }
+
+    public double getDistanceToGoal(){
+        boolean isRedAlliance = isAllianceColorRed();
+        double x =  getPose().getX() - (isRedAlliance ?  Constants.redGoal.getX() : -Constants.blueGoal.getX());
+        double y =  getPose().getY() - (isRedAlliance ?  Constants.redGoal.getY() : -Constants.blueGoal.getY());
+        return Math.sqrt(x*x + y*y);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -195,14 +211,14 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic() {
+        swervePoseEstimator.update(getGyroYaw(), getModulePositions());
         double[] VissionLocation = botPose.get();
         Pose2d VissionRobotPose2d =  new Pose2d(
-                    VissionLocation[0],
-                    VissionLocation[1],
+                    VissionLocation[0] + Constants.fieldMiddle.getX(),
+                    VissionLocation[1] + Constants.fieldMiddle.getY(),
                     getGyroYaw() // or you can use the camera angle new Rotation2d(VissionLocation[5])
         );
         double VissionRobotlatnsy = Timer.getFPGATimestamp() - (VissionLocation[6]/1000.0);
-        swervePoseEstimator.update(getGyroYaw(), getModulePositions());
         
         if(vissionTv.getDouble(0) == 1.0){
             swervePoseEstimator.addVisionMeasurement(VissionRobotPose2d,VissionRobotlatnsy);
@@ -218,5 +234,9 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("OdoX", getPose().getX());
         SmartDashboard.putNumber("OdoY", getPose().getY());
         SmartDashboard.putNumber("OdoRot", getPose().getRotation().getDegrees());
+
+        SmartDashboard.putNumber("Vision x", VissionLocation[0]);
+        SmartDashboard.putNumber("Vision y", VissionLocation[1]);
+        SmartDashboard.putNumber("DistanceToGoal", getDistanceToGoal());
     }
 }
