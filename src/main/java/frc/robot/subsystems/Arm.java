@@ -64,9 +64,9 @@ public class Arm extends SubsystemBase {
         leftMotor.getConfigurator().apply(swerveAngleFXConfig);
         rightMotor.getConfigurator().apply(swerveAngleFXConfig);
 
-        leftMotor.setPosition(getEncoderRotations());
-        rightMotor.setPosition(getEncoderRotations());
-        pose = getEncoderRotations();
+        // leftMotor.setPosition(getEncoderRotations());
+        // rightMotor.setPosition(getEncoderRotations());
+        // pose = getEncoderRotations();
     }
 
     public double getEncoderRotations(){
