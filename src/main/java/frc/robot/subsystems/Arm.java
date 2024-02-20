@@ -63,10 +63,6 @@ public class Arm extends SubsystemBase {
         }
         leftMotor.getConfigurator().apply(swerveAngleFXConfig);
         rightMotor.getConfigurator().apply(swerveAngleFXConfig);
-
-        // leftMotor.setPosition(getEncoderRotations());
-        // rightMotor.setPosition(getEncoderRotations());
-        // pose = getEncoderRotations();
     }
 
     public double getEncoderRotations(){
@@ -75,14 +71,12 @@ public class Arm extends SubsystemBase {
     }
     public void setSpeed(double speed) {
         rightMotor.set(speed);
-        // leftMotor.set(speed);
 
     }
 
     public void setPose(double pose) {
         this.pose = pose;
         rightMotor.setControl(m_voltagePosition.withPosition(pose));
-        // leftMotor.setControl(m_voltagePosition.withPosition(pose));
     }
 
     public double getPose() {
