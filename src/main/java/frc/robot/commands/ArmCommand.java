@@ -22,10 +22,10 @@ public class ArmCommand extends Command {
     public void execute() {
         double speed = upSpeed.getAsDouble() - downSpeed.getAsDouble();
         double pose = arm.getPose() + (speed * 1);
-        if (pose > 0) {
+        if (pose < 0) {
             pose = 0;
         }
-        if (pose < 70) {
+        if (pose > 70) {
             pose = 70;
         }
         arm.setPose(pose);
