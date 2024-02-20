@@ -10,7 +10,7 @@ public class IntakeUp extends SequentialCommandGroup {
     public IntakeUp(Intake intake, Arm arm) {
         addRequirements(intake, arm);
         addCommands(
-                new InstantCommand(() -> arm.setPose(-14)),
+                new InstantCommand(() -> arm.setPose(14)),
                 new InstantCommand(() -> intake.stop()));
     }
 
