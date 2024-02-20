@@ -25,8 +25,8 @@ public class ArmCommand extends Command {
         if (pose < 0) {
             pose = 0;
         }
-        if (pose > 70) {
-            pose = 70;
+        if (pose > 90) {
+            pose = 90;
         }
         arm.setPose(pose);
     }
