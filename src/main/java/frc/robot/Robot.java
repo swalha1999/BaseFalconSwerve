@@ -59,6 +59,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    
+    m_robotContainer.s_Arm.resetToAbslote();
+    m_robotContainer.s_Arm.resetCommandAbslote();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -76,9 +79,13 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.s_Arm.resetToAbslote();
+    m_robotContainer.s_Arm.resetCommandAbslote();
+    
   }
 
   /** This function is called periodically during operator control. */

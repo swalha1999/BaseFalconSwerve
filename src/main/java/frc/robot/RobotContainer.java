@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -32,19 +33,36 @@ public class RobotContainer {
     /*Operator Buttons*/
     private final JoystickButton intakeDown = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton shoot = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton shootDown = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton backNote = new JoystickButton(operator, XboxController.Button.kX.value);
 
     /* Subsystems */
-    public final Swerve s_Swerve = new Swerve();
-    public final Arm s_Arm = new Arm();
-    public final Intake s_Inatke = new Intake();
-    public final Shooter s_Shooter = new Shooter();
-    public final Climer s_Climer = new Climer();
+    public final Swerve s_Swerve; 
+    public final Arm s_Arm; 
+    public final Intake s_Inatke;
+    public final Shooter s_Shooter;
+    public final Climer s_Climer;
 
     private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        s_Swerve = new Swerve();
+        s_Arm = new Arm();
+        s_Inatke = new Intake();
+        s_Shooter = new Shooter();
+        s_Climer = new Climer();
         
+        NamedCommands.registerCommand("ntoe back", new NoteBack(s_Inatke, s_Shooter));
+        NamedCommands.registerCommand("shoot up", new Shoot(s_Inatke, s_Shooter, s_Arm, s_Swerve));
+        NamedCommands.registerCommand("stop shoot", new StopShoot(s_Inatke, s_Shooter));
+        NamedCommands.registerCommand("intake down", new IntakeDown(s_Inatke, s_Arm));
+        NamedCommands.registerCommand("intake up", new IntakeUp(s_Inatke, s_Arm));
+        NamedCommands.registerCommand(
+            "aim shooter",
+            new InstantCommand(
+                () -> s_Arm.setPose((-2.40048) * (s_Swerve.getDistanceToGoal())*(s_Swerve.getDistanceToGoal()) +23.1937 * (s_Swerve.getDistanceToGoal())-19.2118)));
+                
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -87,9 +105,16 @@ public class RobotContainer {
             .onFalse(new IntakeUp(s_Inatke, s_Arm));
         
         shoot
-            .onTrue(new Shoot(s_Inatke, s_Shooter, s_Arm))
+            .onTrue(new Shoot(s_Inatke, s_Shooter, s_Arm, s_Swerve))
             .onFalse(new StopShoot(s_Inatke, s_Shooter));
 
+        shootDown
+            .onTrue(new ShootDown(s_Inatke, s_Shooter, s_Arm, s_Swerve))
+            .onFalse(new StopShoot(s_Inatke, s_Shooter));
+        
+        backNote
+            .onTrue(new NoteBack(s_Inatke, s_Shooter))
+            .onFalse(new StopShoot(s_Inatke, s_Shooter));
     }
     
     public Command getAutonomousCommand() {

@@ -20,7 +20,7 @@ public final class Constants {
     
     public static final Pose2d fieldMiddle = new Pose2d(8.25, 4.10, Rotation2d.fromDegrees(0));
     public static final Pose2d blueGoal = new Pose2d(0, 5.5, Rotation2d.fromDegrees(0));
-    public static final Pose2d redGoal = new Pose2d(16.5, 5.5, Rotation2d.fromDegrees(0));
+    public static final Pose2d redGoal = new Pose2d(16.6, 5.5, Rotation2d.fromDegrees(0));
 
     public static final class Swerve {
         public static final int pigeonID = 5;
