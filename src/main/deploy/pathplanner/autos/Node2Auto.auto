@@ -50,7 +50,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.35
+            "waitTime": 0.1
           }
         },
         {
@@ -68,7 +68,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "middleTo1Node"
+            "pathName": "middleTo2Node"
           }
         },
         {
@@ -92,7 +92,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop shoot"
           }
         },
         {
@@ -111,18 +117,6 @@
           "type": "wait",
           "data": {
             "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot up"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0
           }
         },
         {
