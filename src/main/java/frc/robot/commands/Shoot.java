@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
@@ -12,9 +12,10 @@ public class Shoot extends SequentialCommandGroup {
     public Shoot(Intake intake, Shooter shooter, Arm arm, Swerve swerve) {
         addRequirements(intake, shooter);
         addCommands(
-                new InstantCommand(() -> arm.setPose((-2.40048) * (swerve.getDistanceToGoal())*(swerve.getDistanceToGoal()) +23.1937 * (swerve.getDistanceToGoal())-19.2118)),
+                new InstantCommand(() -> arm.setPose((-3.41) * (swerve.getDistanceToGoal())*(swerve.getDistanceToGoal()) +28.71 * (swerve.getDistanceToGoal())-22.49)),
                 new InstantCommand(() -> shooter.setSpeed(1)),
-                new WaitCommand(0.5),
+                new InstantCommand(() -> arm.resetToAbslote()),
+                new WaitUntilCommand(() -> shooter.getCurrentRPM() > 5000),
                 new InstantCommand(() -> intake.setSpeed(1)));
     }
 

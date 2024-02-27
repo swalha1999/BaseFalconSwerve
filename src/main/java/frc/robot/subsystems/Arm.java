@@ -27,7 +27,8 @@ public class Arm extends SubsystemBase {
 		swerveAngleFXConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
 		swerveAngleFXConfig.Slot0.kP = 1.2; // An error of 0.5 rotations results in 1.2 volts output
-		swerveAngleFXConfig.Slot0.kD = 0.1; // A change of 1 rotation per second results in 0.1 volts output
+		swerveAngleFXConfig.Slot0.kI = 0.1; 
+		swerveAngleFXConfig.Slot0.kD = 0; // A change of 1 rotation per second results in 0.1 volts output
 		// Peak output of 8 volts
 		swerveAngleFXConfig.Voltage.PeakForwardVoltage = 8;
 		swerveAngleFXConfig.Voltage.PeakReverseVoltage = -8;

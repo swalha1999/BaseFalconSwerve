@@ -61,7 +61,7 @@ public class RobotContainer {
         NamedCommands.registerCommand(
             "aim shooter",
             new InstantCommand(
-                () -> s_Arm.setPose((-2.40048) * (s_Swerve.getDistanceToGoal())*(s_Swerve.getDistanceToGoal()) +23.1937 * (s_Swerve.getDistanceToGoal())-19.2118)));
+                () -> s_Arm.setPose((-3.41) * (s_Swerve.getDistanceToGoal())*(s_Swerve.getDistanceToGoal()) +28.71 * (s_Swerve.getDistanceToGoal())-22.49)));
                 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(

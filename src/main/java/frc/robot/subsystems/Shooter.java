@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkFlex;
@@ -20,11 +21,18 @@ public class Shooter extends SubsystemBase {
         lowerMotor.setIdleMode(IdleMode.kCoast);
     }
 
+    public double getCurrentRPM(){
+        return (upperMotor.getEncoder().getVelocity() +  lowerMotor.getEncoder().getVelocity()) / 2;
+    }
+
     public void setSpeed(double speed) {
         upperMotor.set(speed);
         lowerMotor.set(speed);
     }
 
-    
-
+    @Override
+	public void periodic() {
+		SmartDashboard.putNumber("Shooter RPM", getCurrentRPM());
+	}
 }
+
