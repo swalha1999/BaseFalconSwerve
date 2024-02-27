@@ -92,19 +92,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.35
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop shoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "shoot up"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aim shooter"
           }
         },
         {
@@ -116,7 +116,79 @@
         {
           "type": "named",
           "data": {
+            "name": "stop shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ntoe back"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake down"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "node1To2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aim shooter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ntoe back"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "shoot up"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
