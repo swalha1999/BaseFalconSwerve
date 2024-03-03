@@ -44,7 +44,7 @@ public class RobotContainer {
     public final Shooter s_Shooter;
     public final Climer s_Climer;
 
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
