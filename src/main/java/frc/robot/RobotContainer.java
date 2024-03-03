@@ -93,7 +93,7 @@ public class RobotContainer {
         configureButtonBindings();
 
         // in the auto shooter we can set a defult auto in 
-        autoChooser = AutoBuilder.buildAutoChooser();
+        // autoChooser = AutoBuilder.buildAutoChooser();
         // SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
