@@ -44,7 +44,7 @@ public class RobotContainer {
     public final Shooter s_Shooter;
     public final Climer s_Climer;
 
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -93,8 +93,8 @@ public class RobotContainer {
         configureButtonBindings();
 
         // in the auto shooter we can set a defult auto in 
-        autoChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", autoChooser);
+        // autoChooser = AutoBuilder.buildAutoChooser();
+        // SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     private void configureButtonBindings() {
