@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.autos.*;
 
 public class RobotContainer {
     /* Controllers */
@@ -43,7 +44,7 @@ public class RobotContainer {
     public final Shooter s_Shooter;
     public final Climer s_Climer;
 
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -53,15 +54,15 @@ public class RobotContainer {
         s_Shooter = new Shooter();
         s_Climer = new Climer();
         
-        NamedCommands.registerCommand("ntoe back", new NoteBack(s_Inatke, s_Shooter));
-        NamedCommands.registerCommand("shoot up", new Shoot(s_Inatke, s_Shooter, s_Arm, s_Swerve));
-        NamedCommands.registerCommand("stop shoot", new StopShoot(s_Inatke, s_Shooter));
-        NamedCommands.registerCommand("intake down", new IntakeDown(s_Inatke, s_Arm));
-        NamedCommands.registerCommand("intake up", new IntakeUp(s_Inatke, s_Arm));
-        NamedCommands.registerCommand(
-            "aim shooter",
-            new InstantCommand(
-                () -> s_Arm.setPose((-3.41) * (s_Swerve.getDistanceToGoal())*(s_Swerve.getDistanceToGoal()) +28.71 * (s_Swerve.getDistanceToGoal())-22.49)));
+        // NamedCommands.registerCommand("ntoe back", new NoteBack(s_Inatke, s_Shooter));
+        // NamedCommands.registerCommand("shoot up", new Shoot(s_Inatke, s_Shooter, s_Arm, s_Swerve));
+        // NamedCommands.registerCommand("stop shoot", new StopShoot(s_Inatke, s_Shooter));
+        // NamedCommands.registerCommand("intake down", new IntakeDown(s_Inatke, s_Arm));
+        // NamedCommands.registerCommand("intake up", new IntakeUp(s_Inatke, s_Arm));
+        // NamedCommands.registerCommand(
+        //     "aim shooter",
+        //     new InstantCommand(
+        //         () -> s_Arm.setPose((-3.41) * (s_Swerve.getDistanceToGoal())*(s_Swerve.getDistanceToGoal()) +28.71 * (s_Swerve.getDistanceToGoal())-22.49)));
                 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -92,8 +93,8 @@ public class RobotContainer {
         configureButtonBindings();
 
         // in the auto shooter we can set a defult auto in 
-        autoChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", autoChooser);
+        // autoChooser = AutoBuilder.buildAutoChooser();
+        // SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     private void configureButtonBindings() {
@@ -118,6 +119,7 @@ public class RobotContainer {
     }
     
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        return new exampleAuto(s_Swerve);
+        // return autoChooser.getSelected();
     }
 }    
