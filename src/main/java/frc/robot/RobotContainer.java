@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -44,7 +45,7 @@ public class RobotContainer {
     public final Shooter s_Shooter;
     public final Climer s_Climer;
 
-    // private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -93,8 +94,12 @@ public class RobotContainer {
         configureButtonBindings();
 
         // in the auto shooter we can set a defult auto in 
-        // autoChooser = AutoBuilder.buildAutoChooser();
-        // SmartDashboard.putData("Auto Chooser", autoChooser);
+         // A chooser for autonomous commands
+        autoChooser = new SendableChooser<>();
+        autoChooser.setDefaultOption("Node1Auto", new PathPlannerAuto("Node1Atuo"));
+        autoChooser.addOption("Node2Auto", new PathPlannerAuto("Node2Atuo"));
+        autoChooser.addOption("Node12Auto", new PathPlannerAuto("Node12Atuo"));
+        SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     private void configureButtonBindings() {
@@ -119,7 +124,6 @@ public class RobotContainer {
     }
     
     public Command getAutonomousCommand() {
-        return new exampleAuto(s_Swerve);
-        // return autoChooser.getSelected();
+        return autoChooser.getSelected();
     }
 }    
