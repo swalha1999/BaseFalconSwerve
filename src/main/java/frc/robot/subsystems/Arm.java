@@ -30,8 +30,8 @@ public class Arm extends SubsystemBase {
 		swerveAngleFXConfig.Slot0.kI = 0.1; 
 		swerveAngleFXConfig.Slot0.kD = 0; // A change of 1 rotation per second results in 0.1 volts output
 		// Peak output of 8 volts
-		swerveAngleFXConfig.Voltage.PeakForwardVoltage = 8;
-		swerveAngleFXConfig.Voltage.PeakReverseVoltage = -8;
+		swerveAngleFXConfig.Voltage.PeakForwardVoltage = 6;
+		swerveAngleFXConfig.Voltage.PeakReverseVoltage = -6;
 
 		swerveAngleFXConfig.Slot1.kP = 40; // An error of 1 rotations results in 40 amps output
 		swerveAngleFXConfig.Slot1.kD = 2; // A change of 1 rotation per second results in 2 amps output

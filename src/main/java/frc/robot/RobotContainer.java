@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -11,10 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.autos.*;
 
 public class RobotContainer {
     /* Controllers */
@@ -56,15 +53,11 @@ public class RobotContainer {
         s_Climer = new Climer();
         
         NamedCommands.registerCommand("ntoe back", new NoteBack(s_Inatke, s_Shooter));
-        NamedCommands.registerCommand("shoot up", new Shoot(s_Inatke, s_Shooter, s_Arm, s_Swerve));
-        NamedCommands.registerCommand("stop shoot", new StopShoot(s_Inatke, s_Shooter));
+        NamedCommands.registerCommand("shoot up", new AimAndShoot(s_Inatke, s_Shooter, s_Arm, s_Swerve));
+        NamedCommands.registerCommand("stop shoot", new StopShoot(s_Inatke, s_Shooter, s_Arm));
         NamedCommands.registerCommand("intake down", new IntakeDown(s_Inatke, s_Arm));
         NamedCommands.registerCommand("intake up", new IntakeUp(s_Inatke, s_Arm));
-        NamedCommands.registerCommand(
-            "aim shooter",
-            new InstantCommand(
-                () -> s_Arm.setPose((-3.41) * (s_Swerve.getDistanceToGoal())*(s_Swerve.getDistanceToGoal()) +28.71 * (s_Swerve.getDistanceToGoal())-22.49)));
-                
+        NamedCommands.registerCommand("aim shooter", new Aim(s_Arm, s_Swerve));     
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -95,10 +88,7 @@ public class RobotContainer {
 
         // in the auto shooter we can set a defult auto in 
          // A chooser for autonomous commands
-        autoChooser = new SendableChooser<>();
-        autoChooser.setDefaultOption("Node1Auto", new PathPlannerAuto("Node1Atuo"));
-        autoChooser.addOption("Node2Auto", new PathPlannerAuto("Node2Atuo"));
-        autoChooser.addOption("Node12Auto", new PathPlannerAuto("Node12Atuo"));
+        autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
@@ -111,19 +101,20 @@ public class RobotContainer {
             .onFalse(new IntakeUp(s_Inatke, s_Arm));
         
         shoot
-            .onTrue(new Shoot(s_Inatke, s_Shooter, s_Arm, s_Swerve))
-            .onFalse(new StopShoot(s_Inatke, s_Shooter));
+            .onTrue(new AimAndShoot(s_Inatke, s_Shooter, s_Arm, s_Swerve))
+            .onFalse(new StopShoot(s_Inatke, s_Shooter, s_Arm));
 
         shootDown
             .onTrue(new ShootDown(s_Inatke, s_Shooter, s_Arm, s_Swerve))
-            .onFalse(new StopShoot(s_Inatke, s_Shooter));
+            .onFalse(new StopShoot(s_Inatke, s_Shooter, s_Arm));
         
         backNote
             .onTrue(new NoteBack(s_Inatke, s_Shooter))
-            .onFalse(new StopShoot(s_Inatke, s_Shooter));
+            .onFalse(new StopShoot(s_Inatke, s_Shooter, s_Arm));
     }
     
     public Command getAutonomousCommand() {
+        // return new exampleAuto(s_Swerve);
         return autoChooser.getSelected();
     }
 }    
