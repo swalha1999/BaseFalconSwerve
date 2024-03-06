@@ -17,6 +17,9 @@ public class Aim extends Command {
 
     @Override
     public void execute() {
+        if (Math.abs(swerve.getYDistaseToGoal()) > 1.5 ){
+            arm.setPose((-3.41) * (swerve.getDistanceToGoal())*(swerve.getDistanceToGoal()) +28.71 * (swerve.getDistanceToGoal())-18);
+        } 
         if (swerve.getDistanceToGoal() > 2.5) {
             arm.setPose((-3.41) * (swerve.getDistanceToGoal())*(swerve.getDistanceToGoal()) +28.71 * (swerve.getDistanceToGoal())-24);
         }

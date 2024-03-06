@@ -129,6 +129,16 @@ public class Swerve extends SubsystemBase {
 		return Math.sqrt(x*x + y*y);
 	}
 
+	public double getYDistaseToGoal (){
+		boolean isRedAlliance = isAllianceColorRed();
+		return  getVissionPose().getY() - (isRedAlliance ?  Constants.redGoal.getY() : Constants.blueGoal.getY());
+	}
+
+	public double getXDistaseToGoal (){
+		boolean isRedAlliance = isAllianceColorRed();
+		return  getVissionPose().getX() - (isRedAlliance ?  Constants.redGoal.getX() : Constants.blueGoal.getX());
+	}
+
 	public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
 		SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
 				fieldRelative ? calChassisSpeedsFieldRelative(translation, rotation)
@@ -243,12 +253,9 @@ public class Swerve extends SubsystemBase {
 		//     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
 		// }
 
-		SmartDashboard.putNumber("OdoX", getPose().getX());
-		SmartDashboard.putNumber("OdoY", getPose().getY());
-		SmartDashboard.putNumber("OdoRot", getPose().getRotation().getDegrees());
-		SmartDashboard.putNumber("Vision x", vissionPoseEstimator.getEstimatedPosition().getX());
-		SmartDashboard.putNumber("Vision y", vissionPoseEstimator.getEstimatedPosition().getY());
 		
+		SmartDashboard.putNumber("Y diff", getYDistaseToGoal());
+		SmartDashboard.putNumber("X diff", getXDistaseToGoal());
 
 		SmartDashboard.putNumber("DistanceToGoal", getDistanceToGoal());
 	}

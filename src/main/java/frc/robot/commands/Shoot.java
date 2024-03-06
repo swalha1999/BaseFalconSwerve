@@ -11,7 +11,7 @@ public class Shoot extends SequentialCommandGroup {
         addRequirements(intake, shooter);
         addCommands(
                 new InstantCommand(() -> shooter.setSpeed(1)),
-                new WaitUntilCommand(() -> shooter.getCurrentRPM() > 4600),
+                new WaitUntilCommand(() -> shooter.getCurrentRPM() > 4500),
                 new InstantCommand(() -> intake.setSpeed(1)));
     }
 

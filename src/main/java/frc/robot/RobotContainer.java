@@ -53,11 +53,13 @@ public class RobotContainer {
         s_Climer = new Climer();
         
         NamedCommands.registerCommand("ntoe back", new NoteBack(s_Inatke, s_Shooter));
+        NamedCommands.registerCommand("pre shoot", new PreShoot(s_Shooter));
         NamedCommands.registerCommand("shoot up", new AimAndShoot(s_Inatke, s_Shooter, s_Arm, s_Swerve));
         NamedCommands.registerCommand("stop shoot", new StopShoot(s_Inatke, s_Shooter, s_Arm));
         NamedCommands.registerCommand("intake down", new IntakeDown(s_Inatke, s_Arm));
         NamedCommands.registerCommand("intake up", new IntakeUp(s_Inatke, s_Arm));
         NamedCommands.registerCommand("aim shooter", new Aim(s_Arm, s_Swerve));     
+        
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 

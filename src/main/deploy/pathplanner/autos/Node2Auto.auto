@@ -12,27 +12,47 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "aim shooter"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aim shooter"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.7
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "pre shoot"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "wait",
+          "type": "race",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot up"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot up"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
           }
         },
         {
@@ -50,7 +70,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.1
+            "waitTime": 0.3
           }
         },
         {
@@ -102,21 +122,47 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "shoot up"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aim shooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "pre shoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.7
+                }
+              }
+            ]
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "aim shooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot up"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
           }
         },
         {
