@@ -15,7 +15,7 @@ public class Climer extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        climerMotor.set(speed * 0.2);
+        climerMotor.set(speed * 0.8);
 
     }
 

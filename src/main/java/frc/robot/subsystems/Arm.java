@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arm extends SubsystemBase {
 	DigitalInput input = new DigitalInput(9);
 	DutyCycleEncoder encoder = new DutyCycleEncoder(input);
-	double encoderOffset = 0.9108 ;
+	double encoderOffset = 0.8892 ;
 	
 	private TalonFX leftMotor;
 	private TalonFX rightMotor;
